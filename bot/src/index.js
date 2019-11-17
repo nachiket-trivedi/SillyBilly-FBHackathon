@@ -15,8 +15,8 @@ var HashMap = require('hashmap');
 var map = new HashMap();
 var msgmap = new HashMap();
 var userArray = [];
-var questionsMap = ['Where is Los Angeles?', 'What color is the sky?', 'How much is 8-4?'];
-var expectedAsnwersMap = ['California', 'Blue', '4'];
+var questionsMap = ['What starts with \'e\' and ends with \'e\' but  has only one letter in it?', 'How many American cents make up a dime?', 'How many colours are there in a rainbow?'];
+var expectedAsnwersMap = ['envelope', '10', '7'];
 var start = 0;
 var maximum = 0;
 var winner;
@@ -28,12 +28,13 @@ var answersCount = 0;
 
 
 bot.on('message', function(userId, message){
+    /*
     if(message.toString()=='hello'){
-        bot.sendTextMessage(userId, 'Send your face');
-    }
+        bot.sendTextMessage(userId, 'Play !');
+    }*/
     //var userCount = 0, questionsCount = 0, answersCount = 0;
     var resultsMap = new HashMap();
-    if(message.includes("🐽")){
+    if(message.includes("")){
         if(map.get(userId) == undefined){
             console.log('Its in undefined');
             map.set(userId, 0);
@@ -47,9 +48,10 @@ bot.on('message', function(userId, message){
             console.log('User log: '+ userCount);
 
             /* Number of players allowed */
-            if(userCount==1) {
+            if(userCount==2) {
                 console.log('Maximum users reached ! ');
                 for (let user in userArray) {
+                    bot.sendTextMessage(userArray[user], 'Game starts now ...');
                     bot.sendTextMessage(userArray[user], questionsMap[questionsCount]);
                     console.log(questionsMap[questionsCount]);
                     console.log('User ID from userArray' + userArray[user]);
@@ -59,7 +61,7 @@ bot.on('message', function(userId, message){
 
     }
     else if(message == 'play'){
-        bot.sendTextMessage(userId, 'Game starts now. Send your face and name !');
+        bot.sendTextMessage(userId, 'Your name and best face !');
 
         /* Reset to start of the game */
          start = 0;
@@ -105,12 +107,12 @@ function askQuestions(){
         questionsCount = questionsCount +1;
 if(questionsCount >=3){
     for (let user in userArray) {
-        bot.sendTextMessage(userArray[user], 'Game over ! \n The winner is : ' + userNames.get(winner));
+        bot.sendTextMessage(userArray[user], 'Game over ! And the winner is ' + userNames.get(winner));
     }
 }
        else {
     for (let user in userArray) {
-        bot.sendTextMessage(userArray[user], 'Lets move to the next question \n ' );
+        //bot.sendTextMessage(userArray[user], 'Next question \n ' );
         bot.sendTextMessage(userArray[user], questionsMap[questionsCount]);
     }
 }
